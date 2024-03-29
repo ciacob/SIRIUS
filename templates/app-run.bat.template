@@ -1,0 +1,2 @@
+@ECHO OFF
+{ADL_TOOL} -profile extendedDesktop {DESCRIPTOR_FILE_PATH}

@@ -1,0 +1,54 @@
+@echo off
+echo.
+echo BUILDING APPLICATION "{APP_NAME}"...
+
+REM 0. Do a preflight check and see if the project needs to be built
+SETLOCAL
+FOR /F "tokens=* USEBACKQ" %%g IN (`{SIRIUS} {PROJECT_PATH} --dirty-check-only`) do (SET "PROJECT_STATE=%%g")
+IF "%PROJECT_STATE%" == "clean" goto noactionexit
+ENDLOCAL
+
+REM 1. Update own configuration in order to include any last-minute class/dependency change:
+if "%~1"=="--skip-own-update" goto deps
+echo Updating application configuration...
+{SIRIUS} {PROJECT_PATH} --cfg-only --silent
+
+:deps
+REM 2. Recursively update and build dependencies if any:
+echo Updating and building dependencies of "{APP_NAME}"...
+{DEPENDENCIES_SECTION_START}
+{sirius} {dependency_path} --silent
+call {dependency_build_file} --skip-own-update
+if errorlevel 1 goto buildfailed
+{DEPENDENCIES_SECTION_END}
+
+REM 3. Actually build:
+echo Building...
+if exist "{OUTPUT_APP_FILE_PATH}" (
+DEL "{OUTPUT_APP_FILE_PATH}"
+)
+SET javaDir={JAVA_DIR}
+SET sdkJarsDir={JARS_DIR}
+SET frameworksDir={FRAMEWORKS_DIR}
+%javaDir%\java -jar %sdkJarsDir%\mxmlc.jar +flexlib %frameworksDir% {APP_FILE_PATH} -load-config {CONFIG_FILE} -output {OUTPUT_APP_FILE_PATH}
+
+REM 4. Copy assets:
+if exist "{OUTPUT_APP_FILE_PATH}" (
+echo Copying assets...
+{FILE_COPY_START}echo fa | xcopy {src} {target}{FILE_COPY_END}
+) else echo Build failed, skipping copying the assets.
+
+if errorlevel 1 goto buildfailed
+if not errorlevel 1 goto cleanexit
+
+:buildfailed
+echo BUILDING APPLICATION "{APP_NAME}" FAILED, EXITING.
+exit /b %ERRORLEVEL%
+
+:cleanexit
+echo BUILDING APPLICATION "{APP_NAME}" COMPLETE, EXITING.
+exit /b %ERRORLEVEL%
+
+:noactionexit
+echo "{APP_NAME}" ALREADY BUILT, EXITING.
+exit /b %ERRORLEVEL%

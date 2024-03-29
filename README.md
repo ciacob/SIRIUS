@@ -1,2 +1,1 @@
-# SIRIUS
- 
+**SI**mple actionsc**RI**pt b**U**ild **S**ystem

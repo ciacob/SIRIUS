@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<application xmlns="http://ns.adobe.com/air/application/28.0">
+
+	<!-- IMPORTANT NOTE:
+	You can safely edit this file except for the "<content>...</content>" tag, which
+	is overriden by SIRIUS on each build. -->
+
+	<!-- A universally unique application identifier. Must be unique across all AIR applications.
+	Using a reverse DNS-style name as the id is recommended, eg.:
+	com.example.ExampleApplication. -->
+	<id>{APP_UNIQUE_ID}</id>
+
+	<!-- Used as the filename for the application. Don't add a path here. Required. -->
+	<filename>{APP_FILE_NAME}</filename>
+
+	<!-- The name that is displayed in the AIR application installer. -->
+	<name>{APP_FILE_NAME}</name>
+	
+	<!-- A string value of the format <0-999>.<0-999>.<0-999> that represents application
+	version -->
+	<versionNumber>{APP_VERSION_NUMBER}</versionNumber>
+
+	<!-- Description. Optional. -->
+	<description>{APP_DESCRIPTION}</description>
+
+	<!-- Copyright information -->
+	<copyright>{APP_COPYRIGHT}</copyright>
+
+	<initialWindow>
+		<!-- The full path to the application's (main) SWF file. 
+		THIS IS OVERRIDEN BY SIRIUS ON EACH BUILD. -->
+		<content>{OUTPUT_APP_FILE_PATH}</content>
+
+		<!-- The type of system chrome to use, either "standard" or "none". -->
+		<systemChrome>standard</systemChrome>
+
+		<!-- Whether the window is transparent. Only applicable when systemChrome is none.-->
+		<transparent>false</transparent>
+
+		<!-- Whether the user can minimize the window. -->
+		<minimizable>true</minimizable>
+
+		<!-- Whether the user can maximize the window. -->
+		<maximizable>true</maximizable>
+
+		<!-- Whether the user can resize the window. -->
+		<resizable>true</resizable>
+
+		<!-- Display Resolution for the app (either "standard" or "high"). -->
+		<requestedDisplayResolution>standard</requestedDisplayResolution>
+    </initialWindow>
+
+	<!-- Boiler plate code. This must  be always "extendedDesktop" -->
+	<supportedProfiles>extendedDesktop</supportedProfiles>
+</application>

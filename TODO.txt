@@ -1,0 +1,7 @@
+1. Prevent circular references;
+
+2. Allow paths to SDK, JAVA and WORKSPACE to be externally set, via arguments and/or configuration files; support a global configuration file with entries that can be overwritten via command line or by the similarly named configuration file that resides in the current working directory;
+
+3. Make sure SIRIUS works on macOs too: make sure it yelds *.bat files on Windows ans *.sh files on macOS; a SIRIUS parameter shoul make it always output *.sh files (for the event where the developer has unix tools installed on Windows; most on them do);
+
+4. FEATURE: generate "app-prod-build", "lib-prod-build" and "app-with-deps-prod-build" scripts; they will use dedicated configuration files that disconnect the debugger and turn on any optimization flags the compiler has available.
